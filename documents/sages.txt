@@ -1,0 +1,26 @@
+source: https://hyrulearchive.com/tears-of-the-kingdom/guide/sages-guide
+
+The Sages are Link's five divine companions in Tears of the Kingdom, each representing an element and a sacred vow made to the ancient king Rauru. Unlike the Champions of Breath of the Wild, the Sages in TotK actively fight alongside Link rather than providing passive abilities from Divine Beasts. Each Sage is unlocked by completing a specific Temple and activating a Vow by touching a unique Sage's Medallion. This guide covers all five Sages, their backstory, abilities, and upgrade path.
+Tulin — Sage of Wind
+Race: Rito Temple: Wind Temple (Hebra region, sky island) Ability: Tulin's Gust — fires a wind burst that propels Link forward and extends glide distance
+Tulin is the son of Teba, a warrior from BotW. He is enthusiastic, brave, and eager to prove himself. His wind ability is the most movement-focused of all sages, enabling Link to cross vast distances and ascend wind columns more effectively.
+Best Use: Exploration, crossing large gaps, sky island traversal
+Riju — Sage of Lightning
+Race: Gerudo Temple: Lightning Temple (Gerudo Desert) Ability: Riju's Lightning — creates a lightning aura; arrows fired during the aura trigger immediate thunder strikes
+Riju is the chief of the Gerudo, continuing her leadership from Age of Calamity lore. She is confident and strategic. Her lightning ability is the highest-damage sage power for bow-users.
+Best Use: Combat, wet-environment enemies, armored foes, crowd control
+Sidon — Sage of Water
+Race: Zora Temple: Water Temple (above Zora's Domain, sky island) Ability: Sidon's Blessing — creates a water barrier that absorbs hits and detonates as a water explosion
+Sidon returns from BotW as Zora's Domain's beloved prince-turned-king. His calm confidence complements his defensive ability perfectly.
+Best Use: Defense, fire enemy counters, timed burst damage windows
+Yunobo — Sage of Fire
+Race: Goron Temple: Fire Temple (Death Mountain Depths) Ability: Yunobo's Charge — launches Yunobo as a rolling fireball at a targeted direction
+Yunobo is the descendant of Daruk from BotW, though in TotK he has unfortunately been influenced by Marbled Gohma's manipulation. After the Fire Temple, he returns to his true cheerful self.
+Best Use: Mining ore, breaking Talus weakpoints, fire damage, cave combat
+Mineru — Sage of Spirit
+Race: Zonai (ancient) Temple: Spirit Temple (Depths, final temple) Ability: Construct Piloting — Link pilots Mineru's giant Zonai Construct mech directly
+Mineru is Rauru's sister and one of the original ancient Zonai who came to Hyrule. She speaks through her spirit stored in the Construct. Unlike other sages, she does not follow Link — she is summoned as a rideable vehicle.
+Best Use: Heavy combat, mining, dangerous enemy clearing, Depths exploration
+Sage Medallion Vows
+Each Sage provides Link with a Vow by offering their medallion. This is the moment of narrative commitment that grants the sage ability. The vows cannot be revoked — once given, the sage accompanies Link permanently.
+| Sage | Medallion Color | Temple | |------|----------------|--------| | Tulin | Teal | Wind Temple | | Riju | Yellow | Lightning Temple | | Sidon | Blue | Water Temple | | Yunobo | Red/Orange | Fire Temple | | Mineru | Purple | Spirit Temple |

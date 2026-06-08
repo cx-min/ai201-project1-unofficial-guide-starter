@@ -1,0 +1,10 @@
+source: https://game8.co/games/Zelda-Tears-of-the-Kingdom/archives/409353 
+
+The Fuse ability is used to combine weapons, materials, shields, and more together in The Legend of Zelda: Tears of the Kingdom (TotK). Learn how to fuse and unfuse weapons, the best fused weapons to get, how to unlock the fuse ability, and the fuse ability controls!
+With the Fuse Ability selected, press L. The skill will activate, and objects that can be fused with will glow a jade-green. 
+Target the object you want to fuse your weapons with, and press ZL to fuse it to your equipped shield, or Y to fuse it to your equipped weapon. Note: Fusing seems to restore some durability. A badly damaged weapon, when fused, will allow it to be used for an extended period.
+With a bow equipped, draw your bow with ZR. As you are aiming, you can press and hold the Up button on the D-Pad to bring up the Materials menu. Scroll through the materials you have with the Right Stick. Once you've selected the material you want to fuse with your arrow, release the Up button and the material should fuse with your arrow. Note: It appears that you'll have to fuse materials for each arrow that you use. There is no batch fuse feature available.
+Press the Plus (+) Button to open the Inventory menu and navigate to the Weapons tab. Choose the fused weapon that you want to unfuse and select "Destroy Fused Material". This reverts the weapon back to its original state and destroys the fused material.
+Note you can obtain the material when unfusing the weapon if the weapon has Fuse Recycling passive ability. You can disassemble any weapons and shields with fused materials at the Break-a-Part Shop in Tarrey Town. You can avail Pelison's service for 20 Rupees and unfuse weapons or shields from the material you attached at them.
+This method helps you save rare materials like gems or monster parts from powerful enemies such as the Silver Lynel Saber Horn or Silver Lynel Mace Horn.
+
