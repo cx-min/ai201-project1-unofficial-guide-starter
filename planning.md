@@ -10,28 +10,24 @@
 ## Domain
 
 <!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
+This guide covers The Legend of Zelda: Tears of the Kingdom — including its story, lore, characters, abilities, and gameplay mechanics. This knowledge is valuable because the official Nintendo materials don't explain the narrative depth, character motivations, or practical gameplay strategies. Players rely on community wikis, Reddit breakdowns, and fan guides to actually understand what's happening in the game and how to play it effectively.
 
 ---
 
-## Documents
-
-<!-- List your specific sources: URLs, subreddit names, forum threads, or file descriptions.
-     Aim for at least 10 sources that together cover different subtopics or perspectives within your domain. -->
+ ## Documents
 
 | # | Source | Description | URL or location |
 |---|--------|-------------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
-
----
+| 1 | Zelda Fandom Wiki | General game information overview | https://zelda.fandom.com/wiki/The_Legend_of_Zelda:_Tears_of_the_Kingdom#Game_Information |
+| 2 | Reddit r/truezelda | Community story breakdown and analysis | https://www.reddit.com/r/truezelda/comments/13l35ak/totk_botw_totk_complete_story_overhaul_and/ |
+| 3 | Zelda Fandom Wiki | Full plot summary | https://zelda.fandom.com/wiki/The_Legend_of_Zelda:_Tears_of_the_Kingdom#Plot |
+| 4 | Fextralife Wiki | All player abilities explained | https://zeldatearsofthekingdom.wiki.fextralife.com/Abilities |
+| 5 | Inverse | Ending explained with spoilers | https://www.inverse.com/gaming/zelda-tears-kingdom-ending-explained-spoilers |
+| 6 | Game8 | Weapon fusing guide | https://game8.co/games/Zelda-Tears-of-the-Kingdom/archives/409353 |
+| 7 | CBR | Tips and tricks for completing shrines | https://www.cbr.com/zelda-totk-tricks-complete-shrines/ |
+| 8 | Screen Rant | Why Zelda turned into a dragon | https://screenrant.com/zelda-totk-why-turned-into-dragon-secret-stone/ |
+| 9 | Hyrule Archive | Sages guide — who they are and their powers | https://hyrulearchive.com/tears-of-the-kingdom/guide/sages-guide |
+| 10 | Nintendo Life | Beginner tips — what to do first | https://www.nintendolife.com/guides/zelda-tears-of-the-kingdom-beginners-tips-what-to-do-first |
 
 ## Chunking Strategy
 
