@@ -9,7 +9,6 @@
 
 ## Domain
 
-<!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
 This guide covers The Legend of Zelda: Tears of the Kingdom — including its story, lore, characters, abilities, and gameplay mechanics. This knowledge is valuable because the official Nintendo materials don't explain the narrative depth, character motivations, or practical gameplay strategies. Players rely on community wikis, Reddit breakdowns, and fan guides to actually understand what's happening in the game and how to play it effectively.
 
 ---
@@ -31,88 +30,67 @@ This guide covers The Legend of Zelda: Tears of the Kingdom — including its st
 
 ## Chunking Strategy
 
-<!-- How will you split documents into chunks?
-     State your chunk size (in tokens or characters), overlap size, and explain why those
-     numbers fit the structure of your documents.
-     A review-heavy corpus warrants different chunking than a long FAQ. -->
+**Chunk size:** 500 characters
 
-**Chunk size:**
+**Overlap:** 100 characters
 
-**Overlap:**
-
-**Reasoning:**
-
+**Reasoning:** Documents range from short Reddit paragraphs to longer wiki and guide articles. 500 characters captures enough context for a meaningful semantic unit (a few sentences) without diluting the embedding with unrelated content. 100-character overlap ensures that facts spanning two adjacent chunks aren't lost — for example, a sentence explaining Zelda's transformation that begins at the end of one chunk and completes at the start of the next will still be retrievable.
 ---
 
 ## Retrieval Approach
 
-<!-- Which embedding model are you using (e.g., all-MiniLM-L6-v2 via sentence-transformers)?
-     How many chunks will you retrieve per query (top-k)?
-     If you were deploying this for real users and cost wasn't a constraint, what tradeoffs
-     would you weigh in choosing a different embedding model — context length, multilingual
-     support, accuracy on domain-specific text, latency? -->
+**Embedding model:** all-MiniLM-L6-v2 via sentence-transformers (runs locally, no API key)
 
-**Embedding model:**
+**Top-k:** 5 chunks per query
 
-**Top-k:**
-
-**Production tradeoff reflection:**
-
+**Production tradeoff reflection:** For a real deployment I would consider OpenAI's text-embedding-3-large for higher accuracy on domain-specific text, or a multilingual model if the user base includes non-English speakers. The tradeoff is cost and latency vs. quality. all-MiniLM-L6-v2 is fast and free but has a 256-token context limit, which could truncate longer chunks. A production system might also use a larger context model like text-embedding-ada-002 to handle full paragraphs without truncation.
 ---
 
 ## Evaluation Plan
 
-<!-- List your 5 test questions with their expected correct answers.
-     Questions should be specific enough that you can judge whether the system's response
-     is right or wrong. "What are good dining halls?" is too vague.
-     "What do students say about wait times at [dining hall name] during lunch?" is testable. -->
-
 | # | Question | Expected answer |
 |---|----------|-----------------|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
+| 1 | Why did Zelda turn into a dragon? | Zelda swallowed a secret stone and sacrificed herself to revive the Master Sword, transforming into the Light Dragon |
+| 2 | Who is Ganondorf and what is his backstory in TotK? | Ganondorf was a Gerudo king who discovered a secret stone, became the Demon King, and was imprisoned by Rauru beneath Hyrule |
+| 3 | What are the four main abilities Link has in TotK? | Ultrahand, Fuse, Ascend, and Recall |
+| 4 | What is the best strategy for completing shrines efficiently? | Use Ascend to skip sections, look for hidden rooms, and prioritize light of blessing shrines for heart containers |
+| 5 | Who are the five sages and what powers do they grant? | Tulin (wind), Sidon (water), Yunobo (fire), Riju (lightning), and Mineru (spirit/construct) |
 
 ---
 
 ## Anticipated Challenges
 
-<!-- What could go wrong? Name at least two specific risks with reasoning.
-     Consider: noisy or inconsistent documents, missing source attribution, off-topic
-     retrieval, chunks that split key information across boundaries. -->
+1. **Chunk boundary splits:** Story explanations (like Zelda's dragon transformation) 
+span multiple sentences across sources. A key fact may be split across two chunks, 
+causing retrieval to return only half the context the LLM needs to answer correctly.
 
-1.
-
-2.
+2. **Source overlap and contradiction:** Multiple documents cover the same events 
+(e.g. the ending) from different angles. Retrieved chunks may contain slightly 
+contradictory descriptions, which could confuse the LLM or produce a blended answer 
+that doesn't match any single source precisely.
 
 ---
 
 ## Architecture
 
-<!-- Draw a diagram of your pipeline showing the five stages:
-     Document Ingestion → Chunking → Embedding + Vector Store → Retrieval → Generation
-     Label each stage with the tool or library you're using.
-     You can use ASCII art, a Mermaid diagram, or embed a sketch as an image.
-     You'll use this diagram as context when prompting AI tools to implement each stage. -->
-
+```mermaid
+flowchart LR
+    A["Document Ingestion\npipeline.py"] --> B["Chunking\n500 chars / 100 overlap"]
+    B --> C["Embedding\nall-MiniLM-L6-v2"]
+    C --> D["Vector Store\nChromaDB"]
+    D --> E["Retrieval\ntop-5 cosine similarity"]
+    E --> F["Generation\nGroq llama-3.3-70b"]
+```
 ---
 
 ## AI Tool Plan
 
-<!-- For each part of the pipeline below, describe:
-     - Which AI tool you plan to use (Claude, Copilot, ChatGPT, etc.)
-     - What you'll give it as input (which sections of this planning.md, which requirements)
-     - What you expect it to produce
-     - How you'll verify the output matches your spec
-
-     "I'll use AI to help me code" is not a plan.
-     "I'll give Claude my Chunking Strategy section and ask it to implement chunk_text()
-     with my specified chunk size and overlap" is a plan. -->
-
 **Milestone 3 — Ingestion and chunking:**
+I will give Claude my Chunking Strategy section and Documents list and ask it to implement pipeline.py with load_documents(), clean_text(), and chunk_text() using 500-char chunks with 100-char overlap. I will verify the output by running it and inspecting 5 sample chunks.
+
 
 **Milestone 4 — Embedding and retrieval:**
+I will give Claude my Retrieval Approach section and pipeline diagram and ask it to implement embeddings.py using all-MiniLM-L6-v2 and ChromaDB with cosine similarity. I will verify by checking that distance scores on test queries are below 0.5.
 
 **Milestone 5 — Generation and interface:**
+I will give Claude my grounding requirement and evaluation questions and ask it to implement query.py with a system prompt that strictly limits answers to retrieved context, and app.py as a Gradio interface. I will verify that out-of-scope questions return a refusal response.
