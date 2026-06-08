@@ -9,154 +9,126 @@
 
 ## Domain
 
-<!-- What topic or category of knowledge does your system cover?
-     Why is this knowledge valuable, and why is it hard to find through official channels?
-     Example: "Student reviews of CS professors at [university] — useful because official
-     course descriptions don't reflect teaching style, exam difficulty, or workload." -->
+This guide covers The Legend of Zelda: Tears of the Kingdom — including its story, lore, characters, abilities, and gameplay mechanics. This knowledge is valuable because the official Nintendo materials don't explain the narrative depth, character motivations, or practical gameplay strategies. Players rely on community wikis, Reddit breakdowns, and fan guides to actually understand what's happening in the game and how to play it effectively.
 
 ---
 
-## Document Sources
+ ## Documents
 
-<!-- List every source you collected documents from.
-     Be specific: include URLs, subreddit names, forum thread titles, or file names.
-     Aim for variety — sources that together cover different subtopics or perspectives. -->
-
-| # | Source | Type | URL or file path |
-|---|--------|------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
-
----
+| # | Source | Description | URL or location |
+|---|--------|-------------|-----------------|
+| 1 | Zelda Fandom Wiki | General game information overview | https://zelda.fandom.com/wiki/The_Legend_of_Zelda:_Tears_of_the_Kingdom#Game_Information |
+| 2 | Reddit r/truezelda | Community story breakdown and analysis | https://www.reddit.com/r/truezelda/comments/13l35ak/totk_botw_totk_complete_story_overhaul_and/ |
+| 3 | Zelda Fandom Wiki | Full plot summary | https://zelda.fandom.com/wiki/The_Legend_of_Zelda:_Tears_of_the_Kingdom#Plot |
+| 4 | Fextralife Wiki | All player abilities explained | https://zeldatearsofthekingdom.wiki.fextralife.com/Abilities |
+| 5 | Inverse | Ending explained with spoilers | https://www.inverse.com/gaming/zelda-tears-kingdom-ending-explained-spoilers |
+| 6 | Game8 | Weapon fusing guide | https://game8.co/games/Zelda-Tears-of-the-Kingdom/archives/409353 |
+| 7 | CBR | Tips and tricks for completing shrines | https://www.cbr.com/zelda-totk-tricks-complete-shrines/ |
+| 8 | Screen Rant | Why Zelda turned into a dragon | https://screenrant.com/zelda-totk-why-turned-into-dragon-secret-stone/ |
+| 9 | Hyrule Archive | Sages guide — who they are and their powers | https://hyrulearchive.com/tears-of-the-kingdom/guide/sages-guide |
+| 10 | Nintendo Life | Beginner tips — what to do first | https://www.nintendolife.com/guides/zelda-tears-of-the-kingdom-beginners-tips-what-to-do-first |
 
 ## Chunking Strategy
 
-<!-- Describe your chunking approach with enough specificity that someone else could reproduce it.
-     Include:
-     - Chunk size (characters or tokens) and why that size fits your documents
-     - Overlap size and why (or why not) you used overlap
-     - Any preprocessing you did before chunking (e.g., stripping HTML, removing headers)
-     - What your final chunk count was across all documents -->
+**Chunk size:** 500 characters
 
-**Chunk size:**
+**Overlap:** 100 characters
 
-**Overlap:**
+**Reasoning:** Documents range from short Reddit paragraphs to longer wiki and guide articles. 500 characters captures enough context for a meaningful semantic unit (a few sentences) without diluting the embedding with unrelated content. 100-character overlap ensures that facts spanning two adjacent chunks aren't lost — for example, a sentence explaining Zelda's transformation that begins at the end of one chunk and completes at the start of the next will still be retrievable.
+---
 
-**Why these choices fit your documents:**
+## Retrieval Approach
 
-**Final chunk count:**
+**Embedding model:** all-MiniLM-L6-v2 via sentence-transformers (runs locally, no API key)
 
+**Top-k:** 5 chunks per query
+
+**Production tradeoff reflection:** For a real deployment I would consider OpenAI's text-embedding-3-large for higher accuracy on domain-specific text, or a multilingual model if the user base includes non-English speakers. The tradeoff is cost and latency vs. quality. all-MiniLM-L6-v2 is fast and free but has a 256-token context limit, which could truncate longer chunks. A production system might also use a larger context model like text-embedding-ada-002 to handle full paragraphs without truncation.
 ---
 
 ## Embedding Model
 
-<!-- Name the embedding model you used and explain your choice.
-     Then answer: if you were deploying this system for real users and cost wasn't a constraint,
-     what tradeoffs would you weigh in choosing a different model?
-     Consider: context length limits, multilingual support, accuracy on domain-specific text,
-     latency, and local vs. API-hosted. -->
+**Model used:** all-MiniLM-L6-v2 via sentence-transformers (local, no API key required)
 
-**Model used:**
-
-**Production tradeoff reflection:**
+**Production tradeoff reflection:** For a real deployment I would consider OpenAI's 
+text-embedding-3-large or Cohere's embed-v3. The main tradeoffs are: context length — 
+all-MiniLM-L6-v2 has a 256-token limit which can truncate longer chunks, while 
+text-embedding-3-large supports up to 8191 tokens; accuracy on domain-specific text — 
+a model fine-tuned on gaming or wiki content would likely outperform a general-purpose 
+model on TotK queries; latency — local models like all-MiniLM-L6-v2 have no network 
+overhead but are slower per batch than API-hosted models; and multilingual support — 
+if the guide were expanded for non-English speakers, a multilingual model like 
+paraphrase-multilingual-MiniLM-L12-v2 would be necessary.
 
 ---
 
 ## Grounded Generation
 
-<!-- Explain how your system enforces grounding — how does it prevent the LLM from answering
-     beyond the retrieved documents?
-     Describe both your system prompt (what instruction you gave the model) and any structural
-     choices (e.g., how you formatted the context, whether you filtered low-relevance chunks).
-     Do not just say "I told it to use the documents" — show the actual instruction or explain
-     the mechanism. -->
+**System prompt grounding instruction:** The system prompt explicitly instructs the model 
+to answer using ONLY the information provided in the retrieved documents and never use 
+general training knowledge. The exact instruction is: "Answer the question using only 
+the information in the provided documents. If the documents don't contain enough 
+information to answer, say 'I don't have enough information on that.'" Retrieved chunks 
+are injected into the user message as labeled context blocks in the format 
+[Document N: filename] followed by the chunk text, so the model knows exactly which 
+source each piece of information came from.
 
-**System prompt grounding instruction:**
-
-**How source attribution is surfaced in the response:**
-
+**How source attribution is surfaced in the response:** Source filenames are collected 
+programmatically from the metadata of every retrieved chunk and appended to every 
+response regardless of what the LLM returns. This means attribution is guaranteed 
+structurally — it does not rely on the model choosing to cite sources on its own.
 ---
 
 ## Evaluation Report
 
-<!-- Run your 5 test questions from planning.md through your system and record the results.
-     Be honest — a partially accurate or inaccurate result that you explain well is more
-     valuable than a suspiciously perfect result. -->
-
 | # | Question | Expected answer | System response (summarized) | Retrieval quality | Response accuracy |
 |---|----------|-----------------|------------------------------|-------------------|-------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Why did Zelda turn into a dragon? | Zelda swallowed a secret stone and sacrificed herself to revive the Master Sword, becoming the Light Dragon | Zelda turned into a dragon for two reasons: becoming the Light Dragon makes her functionally immortal | Relevant | Partially accurate |
 
-**Retrieval quality:** Relevant / Partially relevant / Off-target  
-**Response accuracy:** Accurate / Partially accurate / Inaccurate
+| 2 | Who is Ganondorf and what is his backstory in TotK? | Ganondorf was a Gerudo king who stole a secret stone, became the Demon King, and was imprisoned by Rauru | Ganondorf is the Demon King who stole Sonia's Secret Stone, gained power of darkness, and filled Hyrule with monsters | Relevant | Accurate |
+
+| 3 | What are the four main abilities Link has in TotK? | Ultrahand, Fuse, Ascend, and Recall | I don't have enough information in my documents to answer that | Partially relevant | Inaccurate |
+
+| 4 | What is the best strategy for completing shrines efficiently? | Use Ascend to skip sections, look for hidden rooms, prioritize light of blessing shrines | I don't have enough information in my documents to answer that | Partially relevant | Inaccurate |
+
+| 5 | Who are the five sages and what powers do they grant? | Tulin (wind), Sidon (water), Yunobo (fire), Riju (lightning), Mineru (spirit) | I don't have enough information in my documents to answer that | Off-target | Inaccurate |
 
 ---
 
 ## Failure Case Analysis
 
-<!-- Identify at least one question where retrieval or generation did not work as expected.
-     Write a specific explanation of *why* it failed, tied to a part of the pipeline.
-
-     "The answer was wrong" is not an explanation.
-
-     "The relevant information was split across a chunk boundary, so retrieval returned
-     only half the context — the model didn't have enough to answer correctly" is an explanation.
-
-     "The embedding model treated the professor's nickname as out-of-vocabulary and returned
-     results from an unrelated review" is an explanation. -->
-
 **Question that failed:**
+"What are the four main abilities Link has in TotK?"
 
 **What the system returned:**
+"I don't have enough information in my documents to answer that." — even though abilities.txt was collected specifically to cover this topic and was present in the retrieved sources.
 
 **Root cause (tied to a specific pipeline stage):**
+The failure originates in the chunking stage. The abilities.txt document contains a list of all four abilities, but the 500-character chunk size split the list across multiple chunks — each chunk only mentions one or two abilities without enough surrounding context to signal that this is a complete answer to the query. The retrieval stage returned chunks that each contained partial information, and the LLM's grounding instruction caused it to 
+refuse rather than synthesize across incomplete chunks.
 
 **What you would change to fix it:**
+Increase chunk size to 800–1000 characters for list-heavy documents like abilities.txt, or use a document-aware chunking strategy that keeps structured lists intact as a single chunk rather than splitting mid-list.
 
 ---
 
 ## Spec Reflection
 
-<!-- Reflect on how planning.md shaped your implementation.
-     Answer both questions with at least 2–3 sentences each. -->
-
 **One way the spec helped you during implementation:**
+Writing the chunking strategy in planning.md before touching any code forced a deliberate decision about chunk size and overlap. When the abilities query failed, I could trace the root cause directly back to the chunk size decision — the spec made the pipeline transparent enough to debug.
 
 **One way your implementation diverged from the spec, and why:**
-
+The spec anticipated that all 5 evaluation questions would be answerable. In practice, 3 out of 5 returned refusals because the chunking strategy split list-heavy content across boundaries. The implementation would need a larger chunk size for structured documents like abilities.txt and sages.txt to match the original spec's intent.
 ---
 
 ## AI Usage
 
-<!-- Describe at least 2 specific instances where you used an AI tool during this project.
-     For each: what did you give the AI as input, what did it produce, and what did you
-     change, override, or direct differently?
-
-     "I used Claude to help me code" is not sufficient.
-     "I gave Claude my Chunking Strategy section from planning.md and asked it to implement
-     chunk_text(). It returned a function using a fixed character split. I overrode the
-     chunk size from 500 to 200 because my documents are short reviews, not long guides." -->
-
 **Instance 1**
-
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:* My Chunking Strategy and Documents sections from planning.md
+- *What it produced:* pipeline.py with load_documents(), clean_text(), and chunk_text() using 500-char chunks with 100-char overlap
+- *What I changed or overrode:* I verified the output by inspecting 5 sample chunks and confirmed the chunk count of 2684 was within acceptable range
 
 **Instance 2**
-
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:* My Retrieval Approach section and grounding requirement
+- *What it produced:* embeddings.py using all-MiniLM-L6-v2 and ChromaDB, and query.py with a system prompt strictly limiting answers to retrieved context
+- *What I changed or overrode:* I tested out-of-scope queries to verify the refusal mechanism worked correctly, and confirmed distance scores on retrieval were below 0.5 for strong queries
